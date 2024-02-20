@@ -1,76 +1,49 @@
-# Angular ASP.NET Core Project
+This repository is a migration from a university enterprise account to a personal GitHub account, reflecting a broader audience and use case.
 
-This project provides an example of getting started using 
-ASP.NET Core and Angular together in one project and is an updated version of the code shown in the [Integrating Angular with ASP.NET Core RESTful Services on Pluralsight](https://www.pluralsight.com/courses/angular-aspnetcore-restful-services). If you're coming from the Pluralsight course you'll find the Angular code for the project in the `Client` folder now.
+# Angular.NET Integration Project
 
-The project has the following goals:
+This project, now titled "Angular.NET Integration Project," is an example of integrating Angular with ASP.NET Core in a cohesive manner. It's an evolution of the concepts discussed in the Pluralsight course, "Integrating Angular with ASP.NET Core RESTful Services." The primary aim is to illustrate a structured approach for combining these powerful technologies into a single project. 
+## Project Objectives
 
-* Keep the Angular project code completely separate from the ASP.NET Core code to make updates of either technology easier in the future. This was a key consideration when organizing the folders/files in the project.
+- **Separation of Concerns:** Maintain a clear separation between Angular and ASP.NET Core codebases to facilitate independent updates and maintenance.
+- **Angular Application Serving:** Utilize an MVC view, with the option to switch to Razor Pages, for serving the Angular application.
+- **Flexibility:** Allow for the use of standard MVC controllers/views alongside the Angular application for more traditional web development needs.
+- **Independent Development:** Enable the Angular project to run independently from the ASP.NET Core Web API, with CORS configured in `Startup.cs` to support this setup.
 
-* Provide a way to serve an Angular application using an MVC view (you can easily change this to serve from a Razor Page as well).
+## Getting Started
 
-* Allow standard MVC controllers/views to be used in situations where part of the application runs outside of Angular.
+To run the "Angular.NET Integration Project," follow these steps:
 
-* Support running the Angular project completely separate from the ASP.NET Core Web API if desired (CORS is enabled in the Startup.cs project). See the notes below if you want to use this option.
+1. **Prerequisites:**
+   - Node.js (version 14 or higher) - [Download](https://nodejs.org)
+   - ASP.NET Core (version 5 or higher) - [Download](https://dot.net)
+   - Angular CLI: Install with `npm install -g @angular/cli`
 
-## Running the Project
+2. **Project Setup:**
+   - Navigate to the `Client` directory and execute `npm install` to install dependencies.
+   - Run `ng build --watch` in the same directory to start the Angular build process and monitor for changes.
+   - In the project root directory, execute the following commands to prepare the ASP.NET Core environment:
+     ```
+     dotnet restore
+     dotnet build
+     dotnet watch run
+     ```
+   - Access the application at http://localhost:5000.
 
-To run the project perform the following steps:
+3. **HTTPS Certificate:** If encountering a certificate error, run `dotnet dev-certs https --trust` to trust the local development certificate.
 
-NOTE: If you're on Windows, download the project from Github as a .zip file, and want to open the project in Visual Studio, make sure you unblock the .zip file first. Right-click on it, select Properties, and check the Unblock checkbox.
+## Running Angular and ASP.NET Core Separately
 
-1. Install Node.js 14 or higher - https://nodejs.org
+For scenarios where running Angular separately from ASP.NET Core is preferred:
 
-2. Install ASP.NET core 5 or higher - https://dot.net
+1. Run the ASP.NET Core project using the commands outlined in the "Project Setup" section.
+2. Modify the `apiUrl` in `Client/src/environments/environment.ts` to `http://localhost:5000/api/`.
+3. Launch the Angular project with `ng serve -o`.
+4. For Angular builds, adjust the `outputDirectory` in `Client/angular.json` to `dist`.
 
-3. Install the Angular CLI:
+## Additional Information
 
-    `npm install -g @angular/cli`
+- CORS has been enabled in `Startup.cs` for cross-origin requests, though it's recommended to tighten these settings for production.
+- Cross-Site Request Forgery (XSRF) protection is enabled for Web API POST/PUT/DELETE methods by default. Consider adjusting this based on your authentication strategy.
 
-4. Open a command prompt and `cd` into the project's `Client` folder
-
-5. Run `npm install`
-
-6. Run `ng build --watch` to start the Angular build process and watch for changes. 
-
-7. Open a new command window in the root of the project and run the following commands:
-
-```
-dotnet restore
-dotnet build
-dotnet watch run
-```
-
-8. Visit http://localhost:5000 in the browser
-
-9. An MVC view is serving the Angular application.
-
-NOTE: If you get a certificate error due to the HTTPS redirect, run the following command to install a local dev certificate:
-
-`dotnet dev-certs https --trust`
-
-## Running Angular Separately from ASP.NET Core
-
-If you'd like to run the Angular project completely separate from ASP.NET Core perform the following steps:
-
-1. Open a new command window in the root of the project and run the following commands to restore, build and run the ASP.NET core project:
-
-```
-dotnet restore
-dotnet build
-dotnet watch run
-``` 
-
-2. Open the `Client/src/environments/environment.ts` file and change the `apiUrl` property to `http://localhost:5000/api/`
-
-3. Launch the Angular project by running `ng serve -o`
-
-4. Note that to do an `ng build` you'll need to open the `Client/angular.json` file and change the `outputDirectory` property to a value of `dist`.
-
-A few additional notes:
-
-* CORS is enabled in the `Startup.cs` file. You'll more than likely want to lock-down some of the settings for it though.
-* Cross-Site Request Forgery (XSRF) is turned on by default for the Web API POST/PUT/DELETE methods. You may want to remove the associated attribute from these methods since in a real-world scenario you'd likely implement token authentication
-in the API when ASP.NET Core is running as a separate/reuseable service.
-
-
+This project stands as a testament to the integration capabilities of Angular and ASP.NET Core, offering a comprehensive guide for developers seeking to leverage both technologies in their web development projects.
